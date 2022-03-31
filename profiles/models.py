@@ -1,6 +1,4 @@
-from tabnanny import verbose
 from django.db import models
-from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.contrib.auth.models import User
 
 
@@ -10,7 +8,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-    
+
     class Meta:
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
