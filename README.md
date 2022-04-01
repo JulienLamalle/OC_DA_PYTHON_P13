@@ -75,3 +75,30 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+
+### Déploiement
+
+Pour ce projet nous utilisons un pipeline CircleCI qui se charge de préparer notre application en plusieurs étapes:
+  * Récupération du code depuis la branche `master`
+  * Création d'un environnement virtuel
+  * Installation des dépendances
+  * Lancement des tests via `pytest`
+  * Installation de `Heroku CLI`
+  * Ajout des variables d'environnements sur heroku
+  * Création de l'image et envoie vers le répertoire de container
+  * Envoie de l'image vers Heroku
+
+Il vous faudra donc créer un compte sur le site [Heroku](https://www.heroku.com/). et créér une application, pensez à modifier le nom de l'application dans le fichier de configuration `.circleci/config.yml`
+
+Ensuite connectez-vous à votre compte CircleCI, crééz un pipeline et séléctionnez la branche `master` pour le déploiement.
+Ajoutez les variables d'environnements suivantes au projet que vous venez de créér:
+
+```yaml
+SECRET_KEY=<your-secret-key>
+DEBUG=True
+ALLOWED_HOSTS='localhost,0.0.0.0,127.0.0.1,<your-app>.herokuapp.com'
+DSN='<your-sentry-dsn-key'
+```
+
+Vous pouvez maintenant déployer votre application en utilisant circleCI, il vous suffira de pousser du code vers votre branche `master` pour que le pipeline déclenche automatiquement les étapes précédentes.
