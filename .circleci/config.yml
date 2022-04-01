@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs: 
+  build-and-test:
+    docker: 
+      - image: circleci/python:3.8.13-slim-buster
+    steps:
+      - checkout 
+      - run:
+          name: install dependencies and environment
+          command: |
+            python3 -m venv env
+            . env/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Test with pytest
+          command: |
+            . env/bin/activate
+            pytest
+  deploy-dev: 
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-63 web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-63 web
+workflows:
+  main:
+    jobs:
+      - build-and-test
+      - deploy-dev:
+          requires:
+            - build-and-test 
+          filters:
+            branches:
+              only: master
