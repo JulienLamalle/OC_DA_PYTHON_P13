@@ -84,7 +84,6 @@ Pour ce projet nous utilisons un pipeline CircleCI qui se charge de préparer no
   * Création d'un environnement virtuel
   * Installation des dépendances
   * Lancement des tests via `pytest`
-  * Lancement de `flake8`
   * Installation de `Heroku CLI`
   * Ajout des variables d'environnements sur heroku
   * Création de l'image et envoie vers le répertoire de container
