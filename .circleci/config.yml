@@ -25,6 +25,10 @@ jobs:
           name: Build and push Docker image to Heroku
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku config:set SECRET_KEY=$SECRET_KEY -a oc-lettings-63 web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku config:set DSN=$DSN -a oc-lettings-63 web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku config:set DEBUG=$DEBUG -a oc-lettings-63 web
+            HEROKU_API_KEY=${HEROKU_TOKEN} heroku config:set ALLOWED_HOSTS=$ALLOWED_HOSTS -a oc-lettings-63 web
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-63 web
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-63 web
