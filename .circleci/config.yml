@@ -3,7 +3,7 @@ version: 2.1
 jobs: 
   build-and-test:
     docker: 
-      - image: circleci/python:3.8.13
+      - image: python:3.8.13-slim-buster
     steps:
       - checkout 
       - run:
