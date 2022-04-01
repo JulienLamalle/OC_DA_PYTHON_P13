@@ -17,11 +17,6 @@ jobs:
           command: |
             . env/bin/activate
             pytest
-      - run:
-          name: Test with flake8
-          command: |
-            . env/bin/activate
-            flake8
   deploy-dev:
     machine: true
     steps:
